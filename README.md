@@ -18,5 +18,5 @@ having internet issues at the time of development made it hard and time consumin
 for the quee part Nuclei integrated it by itself.
 
 
-
+**I found some bug in the agent part for subfinder subscraping packge and at first I vendored the modules but since it was just 1 line I manually edit it from the terminal at build time in Dockerfile**
 ## It was really fun to work on this task. Thanks 
