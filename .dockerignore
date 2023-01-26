@@ -1,0 +1,9 @@
+.air.conf
+./tmp/
+./.vscode
+./.git
+./.gitignore
+./*.json
+./*.yaml
+./.env
+Dockerfile

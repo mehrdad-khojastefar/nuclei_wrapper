@@ -1,16 +1,22 @@
-package utils
+package main
 
 import (
 	"fmt"
 	"strings"
 
+	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
 	"go.mongodb.org/mongo-driver/bson"
-	"hamravesh.ir/mehrdad-khojastefar/database"
-	"hamravesh.ir/mehrdad-khojastefar/models"
 )
 
-func GetUserFromToken(token string) (*models.User, error) {
+func ThrowJsonError(code int, message string, c *gin.Context) {
+	c.JSON(code, gin.H{
+		"error": message,
+	})
+	c.Abort()
+}
+
+func GetUserFromToken(token string) (*User, error) {
 	tokenArr := strings.Split(token, " ")
 	if len(tokenArr) == 1 {
 		return nil, fmt.Errorf("no token were provided")
@@ -22,12 +28,12 @@ func GetUserFromToken(token string) (*models.User, error) {
 		return nil, err
 	}
 	username := claims["username"].(string)
-	bsonUser, err := database.Db.GetUser(username)
+	bsonUser, err := Db.GetUser(username)
 	if err != nil {
 		return nil, err
 	}
 	userByteSlice, _ := bson.Marshal(bsonUser)
-	var user models.User
+	var user User
 	err = bson.Unmarshal(userByteSlice, &user)
 	if err != nil {
 		return nil, err

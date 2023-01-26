@@ -2,11 +2,19 @@ version: '3.1'
 
 services:
 
+  nuclei_wrapper:
+    build: .
+    container_name: nuclei_wrapper
+    ports:
+      - 5000:8000
+    environment:
+      - DB_URI=mongodb://root:example@mongo:27017
+      - DB_DATABASE=hamravesh-task
+      - DB_USER_COLLECTION=users
+
   mongo:
     image: mongo
     restart: always
-    ports:
-      - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
